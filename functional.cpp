@@ -297,7 +297,7 @@ void doWork(vector<int>& vc, vector <function<bool(int)>> funcs) {
     }
 }
 
-int main() {
+int main11111() {
 
     vector<int> vc = { 1,2,3,45,67,33,221,88,99,22 };
 
@@ -326,6 +326,115 @@ int main() {
     function<int(int, int)> f2 = sum;
 
     cout << f2(10, 70) << endl;
+
+    return 0;
+}
+
+
+void print(function<int(int, int)> f) {
+
+    for (int i{}; i < 10 ; ++i)
+        cout << f(i, i*i) << endl;
+    
+}
+
+// Лямбда выражения
+int main() {
+    setlocale(LC_ALL, "rus");
+
+
+    // контекст = & , , ,  mutable, this  -> тип данных
+    //[](){};
+    //[контекст](передаваемые аргументы){тело функции};
+
+    // = контекст по значению (только для чтения)
+    // = контекст по значению (полная копия) mutable
+    // &  контекст по ссылке
+
+
+    int y{};
+
+    double d{ 77.89 };
+    
+    //function<double(int&)> x 
+    auto x = [&](int a, int b) -> int {
+        std::cout << "Lambda function " << endl;    
+        y++;
+        return  a + b;
+    };
+
+    //print(x);
+
+    print(
+        [&](int a, int b) -> int {
+        std::cout << "Lambda function " << endl;
+        y++;
+        return  a + b;
+        }
+    );
+
+    cout << "Y = " << y << endl;
+
+    return 0;
+
+    int a = 10;
+    //double ddd = x(a);
+
+    std::cout << " Y = " << y << endl;
+    std::cout << "a = " << a << endl;
+
+
+
+    return 0;
+
+
+
+    int p{ 100 };
+
+    function<void(int)> ff = [&p](int u) {
+        cout << "Лямбда функция " << u << endl;
+        p++;
+    };
+    ff(100);
+    cout << p << endl;
+
+
+    auto auto_f = [&p](int u) {
+        cout << "Лямбда функция " << u << endl;
+        p++;
+    };
+
+    auto_f(99);
+
+
+    auto auto_f1 = [&p](int u) {
+        cout << "Лямбда функция " << u << endl;
+        p++;
+        return u + u;
+    };
+    auto result = auto_f1(99);
+
+
+    p = 1;
+    cout << p << endl;
+    auto auto_f2 = [p](int u) mutable -> double {
+        cout << "Лямбда функция " << u << endl;
+        p++;
+        return u + u;
+    };
+
+    auto result2 = auto_f2(99);
+    cout << p << endl;
+
+
+
+    //int p = 0;
+    //vector<int> vc = { 1,2,3,45,67,33,221,88,99,22 };
+    //doWork(vc, [p](int a)/*mutable*/ {
+    //    cout << a << endl;
+    //   });
+
+
 
     return 0;
 }
