@@ -338,11 +338,59 @@ void print(function<int(int, int)> f) {
     
 }
 
+int claculate(vector<int>& v, function<bool(int)> func) {
+    int result{};
+
+    for (auto a : v)
+        if (func(a)) 
+            result += a;            
+    return result;
+}
+
+
 // Лямбда выражения
 int main() {
     setlocale(LC_ALL, "rus");
 
+    vector<int> v{ 1,2,3,4,5,6,7,8,9 };
+    int count{};
 
+    auto even = [&](int a) {
+        if (!(a % 2)) {
+            count++;
+            return true;
+        }
+        return false;
+    };
+
+    cout << "sum (even) = " << claculate(v, even) << endl;
+    cout << " count = " << count << endl;
+
+    auto odd = [&](int a) {
+        if ((a % 2)) {
+            count++;
+            return true;
+        }
+        return false;
+    };
+
+    count = 0;
+    cout << "sum (odd) = " << claculate(v, odd) << endl;
+    cout << " count = " << count << endl;
+
+    auto func = [&](int a) {
+        if (!(a% 3)) {
+            count++;
+            return true;
+        }
+        return false;
+    };
+
+    count = 0;
+    cout << "sum (% 3) = " << claculate(v, func) << endl;
+    cout << " count = " << count << endl;
+
+    return 0;
     // контекст = & , , ,  mutable, this  -> тип данных
     //[](){};
     //[контекст](передаваемые аргументы){тело функции};
@@ -357,8 +405,8 @@ int main() {
     double d{ 77.89 };
     
     //function<double(int&)> x 
-    auto x = [&](int a, int b) -> int {
-        std::cout << "Lambda function " << endl;    
+    auto x = [&](int a, int b) mutable -> int {
+        std::cout << "Lambda function "<< y << endl;    
         y++;
         return  a + b;
     };
